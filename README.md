@@ -102,3 +102,45 @@ http://localhost:8080/swagger-ui/index.html
 ```bash
 ./mvnw test
 ```
+---
+
+## Decisões de Design e Arquitetura
+
+### Arquitetura adotada
+
+O projeto foi estruturado seguindo os princípios de:
+
+- Clean Architecture
+- Domain-Driven Design (DDD)
+- Clean Code
+
+A aplicação foi organizada em camadas bem definidas para garantir baixo acoplamento e alta coesão.
+
+---
+
+### A aplicação foi dividida nas seguintes camadas utilizando a Layered Architecture:
+
+- Controller → expõe os endpoints da API
+- Service → contém as regras de negócio
+- Repository → responsável pela persistência de dados
+- Domain → contém as entidades e regras do domínio
+- DTO → objetos para entrada e saída de dados da API
+- Infrastructure → configurações e componentes de infraestrutura
+- Exception → tratamento centralizado de exceções
+
+---
+
+### Transações
+
+As operações financeiras são protegidas por controle transacional via Spring (@Transactional) para garantir:
+
+- Execução completa da operação ou rollback em caso de erro
+- Consistência dos saldos das contas
+- Integridade dos dados durante a persistência 
+
+---
+
+### Testes
+- Testes unitários com JUnit
+- Mocks com Mockito
+- Foco em regras de negócio (Service Layer)
