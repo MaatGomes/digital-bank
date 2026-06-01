@@ -16,6 +16,7 @@ API REST para simulação de um sistema bancário simples, permitindo criação 
 - Swagger (Springdoc OpenAPI)
 - JUnit + Mockito (testes)
 - Lombok
+- Kafka
 
 ---
 
@@ -105,9 +106,9 @@ http://localhost:8080/swagger-ui/index.html
 ```
 ---
 
-## Decisões de Design e Arquitetura
+## Decisões de Design e Arquitetura:
 
-### Arquitetura adotada
+### Arquitetura adotada:
 
 O projeto foi estruturado seguindo os princípios de:
 
@@ -131,7 +132,7 @@ A aplicação foi organizada em camadas bem definidas para garantir baixo acopla
 
 ---
 
-### Transações
+### Transações:
 
 As operações financeiras são protegidas por controle transacional via Spring (@Transactional) para garantir:
 
@@ -139,12 +140,14 @@ As operações financeiras são protegidas por controle transacional via Spring 
 - Consistência dos saldos das contas
 - Integridade dos dados durante a persistência 
 
-Após a conclusão com sucesso de transferencia entre contas, uma notificação é enviada ao cliente. No caso deste projeto
+---
 
+### Notificação:
+Após a conclusão da transferência, a aplicação publica um evento no Kafka. Um consumidor escuta esse evento e realiza o envio da notificação. Dessa forma, a lógica de transferência permanece desacoplada da lógica de notificação, permitindo processamento assíncrono e maior escalabilidade.
 
 ---
 
-### Testes
+### Testes:
 - Testes unitários com JUnit
 - Mocks com Mockito
 - Foco em regras de negócio (Service Layer)
