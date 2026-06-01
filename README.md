@@ -15,6 +15,7 @@ API REST para simulação de um sistema bancário simples, permitindo criação 
 - Bean Validation
 - Swagger (Springdoc OpenAPI)
 - JUnit + Mockito (testes)
+- Lombok
 
 ---
 
