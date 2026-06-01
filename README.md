@@ -51,27 +51,27 @@ Clone o projeto:
 ```bash
 git clone https://github.com/MaatGomes/digital-bank.git
 ```
-No terminal, certifique-se de estar no diretorio correto copiando e colando o comando abaixo:
+---
 
-```bash
-cd digital-bank-api
-```
-Suba o banco de dados PostgreSQL que vai rodar via Docker copiando e colando o comando abaixo no terminal:
+### Subindo o banco de dados (PostgreSQL com Docker)
 
+Antes de executar a aplicação, é necessário subir o banco de dados PostgreSQL via Docker.
+
+No terminal, dentro da raiz do projeto (certifique-se de estar na raiz, caso contrario, não funcionará), execute o comando abaixo:
 ```bash
 docker-compose up -d
 ```
 
-### Executando no Windows:
+### Executando a aplicação no Windows:
 
-Execute a aplicação com Maven Wrapper colando o comando abaixo no terminal:
+Após subir o Docker com o banco de dados, execute a aplicação com Maven Wrapper colando o comando abaixo no terminal:
 
 ```bash
 ./mvnw spring-boot:run
 ```
 ### Executando no Linux/Mac:
 
-Dê permissão ao Maven Wrapper:
+Caso esteja em uma máquina Linux ou Mac será necessário dar permissão ao Maven Wrapper colando o comando abaixo no terminal:
 ```bash
 chmod +x mvnw
 ```
