@@ -29,6 +29,7 @@ API REST para simulação de um sistema bancário simples, permitindo criação 
 - Transferência entre contas
 - Validação de saldo
 - Registro automático de movimentações
+- Envio de notificação após a conclusão da transferência
 
 ### Movimentações
 - Histórico de transações por conta
@@ -137,6 +138,9 @@ As operações financeiras são protegidas por controle transacional via Spring 
 - Execução completa da operação ou rollback em caso de erro
 - Consistência dos saldos das contas
 - Integridade dos dados durante a persistência 
+
+Após a conclusão com sucesso de transferencia entre contas, uma notificação é enviada ao cliente. No caso deste projeto
+
 
 ---
 

@@ -1,13 +1,14 @@
 package com.financial.digital_bank.service;
 
 import com.financial.digital_bank.domain.Enum.TipoMovimentacao;
-import com.financial.digital_bank.domain.event.TransferenciaRealizadaEvent;
+import com.financial.digital_bank.domain.event.TransferenciaNotificacaoEvent;
 import com.financial.digital_bank.dto.ContaCreateRequest;
 import com.financial.digital_bank.dto.ContaResponse;
 import com.financial.digital_bank.dto.TransferenciaRequest;
 import com.financial.digital_bank.domain.entity.Conta;
 import com.financial.digital_bank.domain.entity.Movimentacao;
 import com.financial.digital_bank.exception.BusinessException;
+import com.financial.digital_bank.infrastructure.kafka.NotificacaoProducer;
 import com.financial.digital_bank.repository.ContaRepository;
 import com.financial.digital_bank.repository.MovimentacaoRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,9 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -27,6 +26,7 @@ public class ContaService {
     private final ContaRepository contaRepository;
     private final MovimentacaoRepository movimentacaoRepository;
     private final ApplicationEventPublisher publisher;
+    private final NotificacaoProducer producer;
 
     public List<Conta> listarContas() {
         return contaRepository.findAll();
@@ -83,13 +83,12 @@ public class ContaService {
 
         movimentacaoRepository.save(saida);
         movimentacaoRepository.save(entrada);
-
         contaRepository.save(origem);
         contaRepository.save(destino);
 
         //Envia notificacao
-        publisher.publishEvent(
-                new TransferenciaRealizadaEvent(
+        producer.publish(
+                new TransferenciaNotificacaoEvent(
                         origem.getId(),
                         destino.getId(),
                         request.getValor()
