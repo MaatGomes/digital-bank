@@ -151,3 +151,89 @@ Após a conclusão da transferência, a aplicação publica um evento no Kafka. 
 - Testes unitários com JUnit
 - Mocks com Mockito
 - Foco em regras de negócio (Service Layer)
+
+---
+
+## FAQ
+
+### 1 - Erro de autenticação no PostgreSQL
+
+Ao executar a aplicação, caso apareça um erro semelhante ao abaixo:
+
+```text
+FATAL: password authentication failed for user "postgres"
+```
+
+Pode ser que exista uma instância local do PostgreSQL em execução na mesma porta utilizada pelo banco de dados do projeto. Nesse cenário, a aplicação pode estar tentando se conectar ao banco errado.
+
+Verifique se há algum serviço PostgreSQL rodando localmente e, se necessário, interrompa-o antes de iniciar o ambiente do projeto.
+
+---
+
+### 2 - Erro ao executar o Maven Wrapper
+
+Ao tentar iniciar a aplicação utilizando o Maven Wrapper com o comando:
+
+```bash
+./mvnw spring-boot:run
+```
+
+Caso seja exibido um erro semelhante ao abaixo:
+
+```text
+./mvnw : The term './mvnw' is not recognized as the name of a cmdlet, function, script file, or operable program.
+```
+
+Certifique-se de estar no diretório raiz do projeto, onde se encontram os arquivos `mvnw`, `mvnw.cmd` e `pom.xml`.
+
+Exemplo:
+
+```text
+C:\Users\...\digital-bank\digital-bank-api\
+```
+
+O caminho completo dependerá de onde o projeto foi clonado, porém o diretório final deverá ser:
+
+```text
+\digital-bank\digital-bank-api\
+```
+
+Você também pode verificar se está no diretório correto executando:
+
+```bash
+dir
+```
+
+ou
+
+```bash
+ls
+```
+
+Os arquivos `mvnw`, `mvnw.cmd` e `pom.xml` devem estar presentes na listagem.
+
+---
+
+### 3 - Erro: `Port 5432 is already allocated`
+
+Ao executar o comando:
+
+```bash
+docker-compose up -d
+```
+
+Caso seja exibido um erro semelhante ao abaixo:
+
+```text
+Bind for 0.0.0.0:5432 failed: port is already allocated
+```
+
+Isso significa que a porta `5432`, utilizada pelo PostgreSQL do projeto, já está sendo utilizada por outro processo em sua máquina.
+
+Na maioria dos casos, existe uma instância local do PostgreSQL em execução. Verifique os serviços ativos e interrompa o PostgreSQL local antes de subir os containers do projeto.
+
+Após interromper o serviço, execute novamente:
+
+```bash
+docker-compose up -d
+```
