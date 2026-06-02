@@ -39,7 +39,7 @@ API REST para simulação de um sistema bancário simples, permitindo criação 
 
 ##  Como rodar o projeto:
 
-### Pré-requisitos
+### Pré-requisitos obrigatórios:
 
 - Java 21
 - Docker
