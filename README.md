@@ -158,15 +158,27 @@ Após a conclusão da transferência, a aplicação publica um evento no Kafka. 
 
 ### 1 - Erro de autenticação no PostgreSQL
 
-Ao executar a aplicação, caso apareça um erro semelhante ao abaixo:
+Ao executar o comando abaixo para subir os containers do PostgreSQL e do Kafka:
+
+```bash
+docker-compose up -d
+```
+
+Caso seja exibido um erro semelhante ao abaixo:
 
 ```text
 FATAL: password authentication failed for user "postgres"
 ```
 
-Pode ser que exista uma instância local do PostgreSQL em execução na mesma porta utilizada pelo banco de dados do projeto. Nesse cenário, a aplicação pode estar tentando se conectar ao banco errado.
+Pode ser que exista uma instância local do PostgreSQL em execução na mesma porta utilizada pelo banco de dados do projeto. Nesse cenário, o projeto pode estar tentando se conectar ao banco errado.
 
-Verifique se há algum serviço PostgreSQL rodando localmente e, se necessário, interrompa-o antes de iniciar o ambiente do projeto.
+Verifique se há algum serviço PostgreSQL rodando localmente e, se necessário, interrompa-o antes de iniciar os containers do projeto.
+
+Após interromper o serviço, execute novamente:
+
+```bash
+docker-compose up -d
+```
 
 ---
 
@@ -186,19 +198,25 @@ Caso seja exibido um erro semelhante ao abaixo:
 
 Certifique-se de estar no diretório raiz do projeto, onde se encontram os arquivos `mvnw`, `mvnw.cmd` e `pom.xml`.
 
+Caso tenha clonado o projeto e esteja em um diretório superior, navegue até a pasta da aplicação utilizando o comando:
+
+```bash
+cd digital-bank-api
+```
+
 Exemplo:
+
+```text
+C:\Users\...\digital-bank\
+```
+
+Após executar o comando acima, você deverá estar em um diretório semelhante a:
 
 ```text
 C:\Users\...\digital-bank\digital-bank-api\
 ```
 
-O caminho completo dependerá de onde o projeto foi clonado, porém o diretório final deverá ser:
-
-```text
-\digital-bank\digital-bank-api\
-```
-
-Você também pode verificar se está no diretório correto executando:
+Para confirmar que está no local correto, execute:
 
 ```bash
 dir
@@ -211,6 +229,12 @@ ls
 ```
 
 Os arquivos `mvnw`, `mvnw.cmd` e `pom.xml` devem estar presentes na listagem.
+
+Após isso, execute novamente:
+
+```bash
+./mvnw spring-boot:run
+```
 
 ---
 
