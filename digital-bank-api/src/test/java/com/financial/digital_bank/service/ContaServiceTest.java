@@ -5,6 +5,7 @@ import com.financial.digital_bank.dto.ContaCreateRequest;
 import com.financial.digital_bank.dto.ContaResponse;
 import com.financial.digital_bank.dto.TransferenciaRequest;
 import com.financial.digital_bank.exception.BusinessException;
+import com.financial.digital_bank.infrastructure.kafka.NotificacaoProducer;
 import com.financial.digital_bank.repository.ContaRepository;
 import com.financial.digital_bank.repository.MovimentacaoRepository;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -37,6 +39,9 @@ public class ContaServiceTest {
 
     @Mock
     private ApplicationEventPublisher publisher;
+
+    @Mock
+    private NotificacaoProducer producer;
 
     @Test
     void deveTransferirComSucesso() {
@@ -64,6 +69,8 @@ public class ContaServiceTest {
 
         assertEquals(new BigDecimal("300"), origem.getSaldo());
         assertEquals(new BigDecimal("300"), destino.getSaldo());
+
+        verify(producer).publish(any());
     }
 
     @Test
